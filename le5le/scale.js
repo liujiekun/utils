@@ -5,7 +5,6 @@ function scaleNum(num) {
 function scaleFn(svgstr) {
   // viewBox
   svgstr = svgstr.replace(/viewBox="(.+?)"/g, function (str, m) {
-    console.log('str,m', str, m)
     return `viewBox="0 0 28 28"`
   })
   // x
@@ -15,6 +14,15 @@ function scaleFn(svgstr) {
   // y
   svgstr = svgstr.replace(/\by="(.+?)"/g, function (str, match) {
     return `y="${scaleNum(+match)}"`
+  })
+  svgstr = svgstr.replace(/\btransform="(.+?)"/g, function (str, match) {
+    let temp = match
+    temp = temp.replace(/translate\((.+?)\)/g, function (s, m) {
+      const [x, y] = m.split(' ')
+      console.log('x,y', x, y)
+      return `translate(${scaleNum(+x)} ${scaleNum(+y)})`
+    })
+    return `transform="${temp}"`
   })
   // x1
   svgstr = svgstr.replace(/\bx1="(.+?)"/g, function (str, match) {
@@ -116,7 +124,7 @@ function scaleFn(svgstr) {
       }
 
     })
-    return ` d="${matchStr}"`
+    return `d = "${matchStr}"`
   })
   // points=""
   svgstr = svgstr.replace(/\bpoints="(.+?)"/g, function (str, match) {

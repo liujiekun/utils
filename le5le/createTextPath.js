@@ -6,4 +6,4 @@ const options = { x: 0, y: 0, fontSize: 72, anchor: 'top', attributes: attribute
 
 const svg = textToSVG.getSVG('hello', options);
 
-console.log(textToSVG.getD('3~'));
+console.log(textToSVG.getD('3~', { fontSize: 16 }));
